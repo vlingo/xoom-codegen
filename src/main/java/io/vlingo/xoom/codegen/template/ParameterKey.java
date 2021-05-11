@@ -23,7 +23,7 @@ public interface ParameterKey {
 
     @Override
     public String value() {
-      return null;
+      return value;
     }
   }
 }
