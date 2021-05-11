@@ -12,8 +12,8 @@ public interface ParameterKey {
   String value();
 
   enum Defaults implements ParameterKey {
-    IMPORTS("IMPORTS"),
-    PACKAGE_NAME("PACKAGE_NAME");
+    IMPORTS("imports"),
+    PACKAGE_NAME("packageName");
 
     private final String value;
 
