@@ -15,7 +15,7 @@ import java.util.function.Consumer;
 public enum Language {
   C_SHARP("cs", new String[]{}, new String[]{}),
   F_SHARP("fs", new String[]{}, new String[]{}),
-  JAVASCRIPT("js", new String[]{"frontend"}, new String[]{}),
+  JAVASCRIPT("js", new String[]{"src", "main", "frontend"}, new String[]{}),
   JAVA("java", new String[]{"src", "main", "java"}, new String[]{"src", "test", "java"}),
   KOTLIN("kt", new String[]{"src", "main", "kotlin"}, new String[]{"src", "test", "kotlin"});
 
