@@ -2,17 +2,29 @@ package io.vlingo.xoom.codegen.template;
 
 public interface TemplateStandard {
 
-  String resolveClassname();
+  default String resolveClassname() {
+    throw new UnsupportedOperationException("Unable to resolve classname");
+  }
 
-  String resolveClassname(final String name);
+  default String resolveClassname(final String name) {
+    throw new UnsupportedOperationException("Unable to resolve classname");
+  }
 
-  String resolveClassname(final TemplateParameters parameters);
+  default String resolveClassname(final TemplateParameters parameters) {
+    throw new UnsupportedOperationException("Unable to resolve classname");
+  }
 
-  String resolveClassname(final String name, final TemplateParameters parameters);
+  default String resolveClassname(final String name, final TemplateParameters parameters) {
+    throw new UnsupportedOperationException("Unable to resolve classname");
+  }
 
-  String resolveFilename(final TemplateParameters parameters);
+  default String resolveFilename(final TemplateParameters parameters) {
+    throw new UnsupportedOperationException("Unable to resolve filename");
+  }
 
-  String resolveFilename(final String name, final TemplateParameters parameters);
+  default String resolveFilename(final String name, final TemplateParameters parameters) {
+    throw new UnsupportedOperationException("Unable to resolve filename");
+  }
 
   String retrieveTemplateFilename(final TemplateParameters parameters);
 
