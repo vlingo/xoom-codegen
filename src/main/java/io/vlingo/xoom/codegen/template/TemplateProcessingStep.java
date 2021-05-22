@@ -9,7 +9,7 @@ package io.vlingo.xoom.codegen.template;
 
 import io.vlingo.xoom.codegen.CodeGenerationContext;
 import io.vlingo.xoom.codegen.CodeGenerationStep;
-import io.vlingo.xoom.codegen.language.Language;
+import io.vlingo.xoom.codegen.dialect.Dialect;
 
 import java.util.List;
 
@@ -17,19 +17,19 @@ public abstract class TemplateProcessingStep implements CodeGenerationStep {
 
   @Override
   public void process(final CodeGenerationContext context) {
-    final Language language = resolveLanguage(context);
-    language.resolvePreParametersProcessing(context.parameters());
+    final Dialect dialect = resolveDialect(context);
+    dialect.resolvePreParametersProcessing(context.parameters());
     buildTemplatesData(context).forEach(templateData -> {
-      language.resolvePostParametersProcessing(templateData.parameters());
-      final String code = TemplateProcessor.instance().process(language, templateData);
-      context.registerTemplateProcessing(language, templateData, code);
+      dialect.resolvePostParametersProcessing(templateData.parameters());
+      final String code = TemplateProcessor.instance().process(dialect, templateData);
+      context.registerTemplateProcessing(dialect, templateData, code);
     });
   }
 
   protected abstract List<TemplateData> buildTemplatesData(final CodeGenerationContext context);
 
-  protected Language resolveLanguage(final CodeGenerationContext context) {
-    return Language.findDefault();
+  protected Dialect resolveDialect(final CodeGenerationContext context) {
+    return Dialect.findDefault();
   }
 
 }

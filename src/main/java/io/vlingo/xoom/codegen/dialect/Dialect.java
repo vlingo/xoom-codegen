@@ -5,17 +5,17 @@
 // was not distributed with this file, You can obtain
 // one at https://mozilla.org/MPL/2.0/.
 
-package io.vlingo.xoom.codegen.language;
+package io.vlingo.xoom.codegen.dialect;
 
 import io.vlingo.xoom.codegen.parameter.CodeGenerationParameters;
 import io.vlingo.xoom.codegen.template.TemplateParameters;
 
 import java.util.function.Consumer;
 
-public enum Language {
+public enum Dialect {
   C_SHARP("cs", new String[]{}, new String[]{}),
   F_SHARP("fs", new String[]{}, new String[]{}),
-  JAVASCRIPT("js", new String[]{"frontend"}, new String[]{}),
+  REACTJS("js", new String[]{"src", "main", "frontend"}, new String[]{}),
   JAVA("java", new String[]{"src", "main", "java"}, new String[]{"src", "test", "java"}),
   KOTLIN("kt", new String[]{"src", "main", "kotlin"}, new String[]{"src", "test", "kotlin"});
 
@@ -25,19 +25,19 @@ public enum Language {
   public final Consumer<CodeGenerationParameters> preParametersProcessingResolver;
   public final Consumer<TemplateParameters> postParametersProcessingResolver;
 
-  Language(final String extension,
-           final String[] sourceFolder,
-           final String[] testSourceFolder) {
+  Dialect(final String extension,
+          final String[] sourceFolder,
+          final String[] testSourceFolder) {
     this(extension, sourceFolder, testSourceFolder, params -> {
     }, params -> {
     });
   }
 
-  Language(final String extension,
-           final String[] sourceFolder,
-           final String[] testSourceFolder,
-           final Consumer<CodeGenerationParameters> preParametersProcessingResolver,
-           final Consumer<TemplateParameters> postParametersProcessingResolver) {
+  Dialect(final String extension,
+          final String[] sourceFolder,
+          final String[] testSourceFolder,
+          final Consumer<CodeGenerationParameters> preParametersProcessingResolver,
+          final Consumer<TemplateParameters> postParametersProcessingResolver) {
     this.extension = extension;
     this.sourceFolder = sourceFolder;
     this.testSourceFolder = testSourceFolder;
@@ -45,7 +45,7 @@ public enum Language {
     this.postParametersProcessingResolver = postParametersProcessingResolver;
   }
 
-  public static Language findDefault() {
+  public static Dialect findDefault() {
     return JAVA;
   }
 

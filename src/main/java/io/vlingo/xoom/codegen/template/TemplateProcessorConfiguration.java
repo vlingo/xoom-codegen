@@ -9,6 +9,8 @@ package io.vlingo.xoom.codegen.template;
 import freemarker.template.Configuration;
 import freemarker.template.DefaultObjectWrapper;
 import freemarker.template.TemplateExceptionHandler;
+import freemarker.template.TemplateModelException;
+import io.vlingo.xoom.codegen.CodeGenerationException;
 
 import java.util.Locale;
 
@@ -28,14 +30,24 @@ public class TemplateProcessorConfiguration {
   }
 
   private TemplateProcessorConfiguration() {
-    DefaultObjectWrapper objectWrapper = new DefaultObjectWrapper(DEFAULT_INCOMPATIBLE_IMPROVEMENTS);
+    try {
+      this.configuration = new Configuration(DEFAULT_INCOMPATIBLE_IMPROVEMENTS);
+      configuration.setClassForTemplateLoading(TemplateProcessor.class, "/");
+      configuration.setDefaultEncoding("UTF-8");
+      configuration.setLocale(Locale.US);
+      configuration.setSharedVariable("fns", TemplateCustomFunctions.instance());
+      configuration.setTemplateExceptionHandler(TemplateExceptionHandler.RETHROW_HANDLER);
+      configuration.setObjectWrapper(objectWrapper());
+    } catch (final TemplateModelException e) {
+      e.printStackTrace();
+      throw new CodeGenerationException(e);
+    }
+  }
+
+  private DefaultObjectWrapper objectWrapper() {
+    final DefaultObjectWrapper objectWrapper = new DefaultObjectWrapper(DEFAULT_INCOMPATIBLE_IMPROVEMENTS);
     objectWrapper.setExposeFields(true);
-    this.configuration = new Configuration(DEFAULT_INCOMPATIBLE_IMPROVEMENTS);
-    configuration.setClassForTemplateLoading(TemplateProcessor.class, "/");
-    configuration.setDefaultEncoding("UTF-8");
-    configuration.setLocale(Locale.US);
-    configuration.setTemplateExceptionHandler(TemplateExceptionHandler.RETHROW_HANDLER);
-    configuration.setObjectWrapper(objectWrapper);
+    return objectWrapper;
   }
 
 }

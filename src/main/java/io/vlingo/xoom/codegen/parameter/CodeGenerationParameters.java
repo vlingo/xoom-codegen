@@ -7,7 +7,7 @@
 
 package io.vlingo.xoom.codegen.parameter;
 
-import io.vlingo.xoom.codegen.language.Language;
+import io.vlingo.xoom.codegen.dialect.Dialect;
 
 import java.util.*;
 import java.util.Map.Entry;
@@ -17,7 +17,7 @@ import java.util.stream.Stream;
 
 public class CodeGenerationParameters {
 
-  private final Map<ParameterLabel, Language> conversionEntries = new HashMap<>();
+  private final Map<ParameterLabel, Dialect> conversionEntries = new HashMap<>();
   private final List<CodeGenerationParameter> parameters = new ArrayList<>();
 
   public static CodeGenerationParameters from(final ParameterLabel label, final Object value) {
@@ -102,16 +102,16 @@ public class CodeGenerationParameters {
     return parameters.isEmpty();
   }
 
-  public void convertValuesSyntax(final Language language,
+  public void convertValuesSyntax(final Dialect dialect,
                                   final ParameterLabel parentLabel,
                                   final ParameterLabel relatedLabel,
                                   final Function<String, String> converter) {
-    if (!isAlreadyConverted(language, relatedLabel)) {
+    if (!isAlreadyConverted(dialect, relatedLabel)) {
       conversionEntries.remove(relatedLabel);
 
       performBulkRetrieval(parentLabel).forEach(parent -> parent.convertValuesSyntax(relatedLabel, converter));
 
-      conversionEntries.put(relatedLabel, language);
+      conversionEntries.put(relatedLabel, dialect);
     }
   }
 
@@ -129,9 +129,9 @@ public class CodeGenerationParameters {
     parameters.addAll(nonAffectedParameters);
   }
 
-  private boolean isAlreadyConverted(final Language language, final ParameterLabel label) {
+  private boolean isAlreadyConverted(final Dialect dialect, final ParameterLabel label) {
     if (conversionEntries.containsKey(label)) {
-      return conversionEntries.get(label).equals(language);
+      return conversionEntries.get(label).equals(dialect);
     }
     return false;
   }

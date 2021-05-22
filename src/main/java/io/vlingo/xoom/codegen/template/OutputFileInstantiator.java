@@ -7,18 +7,18 @@
 package io.vlingo.xoom.codegen.template;
 
 import io.vlingo.xoom.codegen.CodeGenerationContext;
-import io.vlingo.xoom.codegen.language.Language;
+import io.vlingo.xoom.codegen.dialect.Dialect;
 
 public interface OutputFileInstantiator {
 
   OutputFile instantiate(final CodeGenerationContext context,
                          final TemplateData templateData,
-                         final Language language);
+                         final Dialect dialect);
 
   static OutputFileInstantiator defaultInstantiation() {
-    return (context, data, language) -> {
-      final String absolutePath = context.fileLocationResolver().resolve(context, data);
-      final String filename = language.formatFilename(data.filename());
+    return (context, data, dialect) -> {
+      final String absolutePath = context.fileLocationResolver().resolve(context, dialect, data);
+      final String filename = dialect.formatFilename(data.filename());
       return new OutputFile(absolutePath, filename, "", data.isPlaceholder());
     };
   }

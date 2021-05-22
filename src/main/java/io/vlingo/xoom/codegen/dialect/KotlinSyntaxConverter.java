@@ -5,14 +5,14 @@
 // was not distributed with this file, You can obtain
 // one at https://mozilla.org/MPL/2.0/.
 
-package io.vlingo.xoom.codegen.language;
+package io.vlingo.xoom.codegen.dialect;
 
 import freemarker.template.utility.StringUtil;
 import io.vlingo.xoom.codegen.parameter.CodeGenerationParameters;
 import io.vlingo.xoom.codegen.parameter.ParameterLabel;
 import io.vlingo.xoom.codegen.template.TemplateParameters;
 
-import static io.vlingo.xoom.codegen.language.Language.KOTLIN;
+import static io.vlingo.xoom.codegen.dialect.Dialect.KOTLIN;
 
 public class KotlinSyntaxConverter {
 
@@ -28,7 +28,7 @@ public class KotlinSyntaxConverter {
 
   protected static final String handleImportEntry(final String importEntry) {
     String resolvedImport = importEntry;
-    for (final String reservedWord : LanguageSetup.KOTLIN_RESERVED_WORDS) {
+    for (final String reservedWord : DialectSetup.KOTLIN_RESERVED_WORDS) {
       resolvedImport = handleReservedWord(reservedWord, resolvedImport);
     }
     return resolvedImport;
