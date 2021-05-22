@@ -43,8 +43,13 @@ public class TemplateCustomFunctions {
     }
   }
 
-  public String capitalize(final String word) {
-    return StringUtil.capitalize(word);
+  public String capitalize(String word) {
+    char ch = word.charAt(0);
+    if (Character.isUpperCase(ch)) {
+      return word;
+    }else{
+      return Character.toUpperCase(ch) + word.substring(1);
+    }
   }
 
   public String capitalizeMultiWord(final String word) {
