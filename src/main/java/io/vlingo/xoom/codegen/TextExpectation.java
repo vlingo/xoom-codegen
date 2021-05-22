@@ -7,7 +7,7 @@
 
 package io.vlingo.xoom.codegen;
 
-import io.vlingo.xoom.codegen.language.Language;
+import io.vlingo.xoom.codegen.dialect.Dialect;
 import org.apache.commons.io.IOUtils;
 
 import java.io.IOException;
@@ -16,20 +16,20 @@ import java.nio.charset.StandardCharsets;
 
 public class TextExpectation {
 
-  private final Language language;
+  private final Dialect dialect;
 
   public static TextExpectation onJava() {
-    return new TextExpectation(Language.JAVA);
+    return new TextExpectation(Dialect.JAVA);
   }
 
-  private TextExpectation(final Language language) {
-    this.language = language;
+  private TextExpectation(final Dialect dialect) {
+    this.dialect = dialect;
   }
 
   public String read(final String textFileName) throws IOException {
     final String path =
             String.format("/text-expectations/%s/%s.text",
-                    language.name().toLowerCase(), textFileName);
+                    dialect.name().toLowerCase(), textFileName);
 
     final InputStream stream = TextExpectation.class.getResourceAsStream(path);
 

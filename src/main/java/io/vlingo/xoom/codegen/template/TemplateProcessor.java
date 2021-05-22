@@ -3,7 +3,7 @@ package io.vlingo.xoom.codegen.template;
 import freemarker.template.Template;
 import freemarker.template.TemplateException;
 import io.vlingo.xoom.codegen.CodeGenerationException;
-import io.vlingo.xoom.codegen.language.Language;
+import io.vlingo.xoom.codegen.dialect.Dialect;
 
 import java.io.IOException;
 import java.io.StringWriter;
@@ -24,24 +24,24 @@ public class TemplateProcessor {
     return instance;
   }
 
-  public String process(final Language language, final TemplateData mainTemplateData) {
+  public String process(final Dialect dialect, final TemplateData mainTemplateData) {
     mainTemplateData.dependencies().forEach(templateData -> {
       final String outcome =
-              process(language, templateData.standard(), templateData.parameters());
+              process(dialect, templateData.standard(), templateData.parameters());
 
       mainTemplateData.handleDependencyOutcome(templateData.standard(), outcome);
     });
 
-    return process(language, mainTemplateData.standard(), mainTemplateData.parameters());
+    return process(dialect, mainTemplateData.standard(), mainTemplateData.parameters());
   }
 
-  private String process(final Language language, final TemplateStandard standard, final TemplateParameters parameters) {
+  private String process(final Dialect dialect, final TemplateStandard standard, final TemplateParameters parameters) {
     try {
       final String templateFilename =
               standard.retrieveTemplateFilename(parameters);
 
       final String templatePath =
-              String.format(TEMPLATE_PATH_PATTERN, language.templateFolderName(), templateFilename);
+              String.format(TEMPLATE_PATH_PATTERN, dialect.templateFolderName(), templateFilename);
 
       final Template template =
               TemplateProcessorConfiguration.instance()

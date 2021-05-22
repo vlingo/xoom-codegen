@@ -26,6 +26,11 @@ public interface TemplateStandard {
     throw new UnsupportedOperationException("Unable to resolve filename");
   }
 
-  String retrieveTemplateFilename(final TemplateParameters parameters);
+  default String retrieveTemplateFilename() {
+    throw new UnsupportedOperationException("Unable to resolve filename");
+  }
 
+  default String retrieveTemplateFilename(final TemplateParameters parameters) {
+    throw new UnsupportedOperationException("Unable to resolve filename");
+  }
 }

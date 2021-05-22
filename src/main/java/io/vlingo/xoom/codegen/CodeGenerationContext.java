@@ -9,7 +9,7 @@ package io.vlingo.xoom.codegen;
 
 import io.vlingo.xoom.codegen.content.Content;
 import io.vlingo.xoom.codegen.content.ContentLoader;
-import io.vlingo.xoom.codegen.language.Language;
+import io.vlingo.xoom.codegen.dialect.Dialect;
 import io.vlingo.xoom.codegen.parameter.CodeGenerationParameter;
 import io.vlingo.xoom.codegen.parameter.CodeGenerationParameters;
 import io.vlingo.xoom.codegen.parameter.ParameterLabel;
@@ -103,8 +103,8 @@ public class CodeGenerationContext {
             .collect(Collectors.toList());
   }
 
-  public void registerTemplateProcessing(final Language language, final TemplateData templateData, final String text) {
-    final OutputFile outputFile = outputFileInstantiator.instantiate(this, templateData, language);
+  public void registerTemplateProcessing(final Dialect dialect, final TemplateData templateData, final String text) {
+    final OutputFile outputFile = outputFileInstantiator.instantiate(this, templateData, dialect);
     this.addContent(templateData.standard(), outputFile, text);
     this.templatesData.add(templateData);
   }
@@ -157,8 +157,8 @@ public class CodeGenerationContext {
     return parameters;
   }
 
-  public Language language() {
-    return Language.findDefault();
+  public Dialect dialect() {
+    return Dialect.findDefault();
   }
 
   public FileLocationResolver fileLocationResolver() {
