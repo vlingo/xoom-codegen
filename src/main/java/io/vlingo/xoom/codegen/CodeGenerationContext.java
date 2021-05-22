@@ -33,7 +33,7 @@ public class CodeGenerationContext {
   private final CodeGenerationParameters parameters;
   private final List<Content> contents = new ArrayList<>();
   private final List<TemplateData> templatesData = new ArrayList<>();
-  private FileLocationResolver fileLocationResolver = (context, data) -> "";
+  private FileLocationResolver fileLocationResolver = (context, dialect, data) -> "";
   private OutputFileInstantiator outputFileInstantiator = OutputFileInstantiator.defaultInstantiation();
 
   public static CodeGenerationContext empty() {
@@ -155,10 +155,6 @@ public class CodeGenerationContext {
 
   public CodeGenerationParameters parameters() {
     return parameters;
-  }
-
-  public Dialect dialect() {
-    return Dialect.findDefault();
   }
 
   public FileLocationResolver fileLocationResolver() {

@@ -7,10 +7,11 @@
 
 package io.vlingo.xoom.codegen;
 
+import io.vlingo.xoom.codegen.dialect.Dialect;
 import io.vlingo.xoom.codegen.template.TemplateData;
 
 public interface FileLocationResolver {
 
-  String resolve(final CodeGenerationContext context, final TemplateData templateData);
+  String resolve(final CodeGenerationContext context, final Dialect dialect, final TemplateData templateData);
 
 }

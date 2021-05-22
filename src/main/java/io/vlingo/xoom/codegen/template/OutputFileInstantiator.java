@@ -16,9 +16,9 @@ public interface OutputFileInstantiator {
                          final Dialect dialect);
 
   static OutputFileInstantiator defaultInstantiation() {
-    return (context, data, language) -> {
-      final String absolutePath = context.fileLocationResolver().resolve(context, data);
-      final String filename = language.formatFilename(data.filename());
+    return (context, data, dialect) -> {
+      final String absolutePath = context.fileLocationResolver().resolve(context, dialect, data);
+      final String filename = dialect.formatFilename(data.filename());
       return new OutputFile(absolutePath, filename, "", data.isPlaceholder());
     };
   }
