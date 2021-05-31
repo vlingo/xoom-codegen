@@ -14,10 +14,11 @@ import java.util.stream.Stream;
 
 public class CodeGenerationParameter {
 
-  public final ParameterLabel label;
   public final String value;
+  public final ParameterLabel label;
   private CodeGenerationParameter parent;
   private final CodeGenerationParameters relatedParameters;
+  private Object object;
 
   public static CodeGenerationParameter of(final ParameterLabel label) {
     return of(label, label.toString());
@@ -27,12 +28,24 @@ public class CodeGenerationParameter {
     return of(label, value.toString());
   }
 
+  public static CodeGenerationParameter ofObject(final ParameterLabel label, final Object object) {
+    return new CodeGenerationParameter(label, object, null, CodeGenerationParameters.empty());
+  }
+
   public static CodeGenerationParameter of(final ParameterLabel label, final String value) {
     return new CodeGenerationParameter(label, value);
   }
 
   private CodeGenerationParameter(final ParameterLabel label, final String value) {
     this(label, value, null, CodeGenerationParameters.empty());
+  }
+
+  private CodeGenerationParameter(final ParameterLabel label,
+                                  final Object object,
+                                  final CodeGenerationParameter parent,
+                                  final CodeGenerationParameters relatedParameters) {
+    this(label, object.toString(), parent, relatedParameters);
+    this.object = object;
   }
 
   private CodeGenerationParameter(final ParameterLabel label,
@@ -134,4 +147,7 @@ public class CodeGenerationParameter {
     return new CodeGenerationParameter(label, formatter.apply(value), parent, relatedParameters);
   }
 
+  public <T> T object() {
+    return (T) object;
+  }
 }
