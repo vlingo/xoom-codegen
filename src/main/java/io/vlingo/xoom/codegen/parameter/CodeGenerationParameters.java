@@ -21,7 +21,7 @@ public class CodeGenerationParameters {
   private final List<CodeGenerationParameter> parameters = new ArrayList<>();
 
   public static CodeGenerationParameters from(final ParameterLabel label, final Object value) {
-    return from(label, value.toString());
+    return from(CodeGenerationParameter.ofObject(label, value));
   }
 
   public static CodeGenerationParameters from(final ParameterLabel label, final String value) {
