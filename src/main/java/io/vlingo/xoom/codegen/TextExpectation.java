@@ -26,13 +26,16 @@ public class TextExpectation {
     this.dialect = dialect;
   }
 
-  public String read(final String textFileName) throws IOException {
+  public String read(final String textFileName) {
     final String path =
             String.format("/text-expectations/%s/%s.text",
                     dialect.name().toLowerCase(), textFileName);
 
-    final InputStream stream = TextExpectation.class.getResourceAsStream(path);
-
-    return IOUtils.toString(stream, StandardCharsets.UTF_8.name());
+    try {
+      final InputStream stream = TextExpectation.class.getResourceAsStream(path);
+      return IOUtils.toString(stream, StandardCharsets.UTF_8.name());
+    } catch (Exception cause) {
+      throw new RuntimeException(String.format("Failed to load text expectations from `%s`.", path), cause);
+    }
   }
 }

@@ -4,8 +4,8 @@
   <artifactId>xoom-codegen</artifactId>
   <version>1.7.8-SNAPSHOT</version>
   <description>Code generation library used by XOOM Designer and XOOM Turbo. (Specialized code generation for XOOM Actors, XOOM HTTP, and others are based on distinct libraries maintained in their own repositories).</description>
-  <name>xoom-turbo</name>
-  <url>https://github.com/vlingo/xoom-turbo</url>
+  <name>xoom-codegen</name>
+  <url>https://github.com/vlingo/xoom-codegen</url>
 
   <licenses>
     <license>
@@ -39,18 +39,19 @@
     <maven.compiler.target>1.8</maven.compiler.target>
     <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
     <project.reporting.outputEncoding>UTF-8</project.reporting.outputEncoding>
+    <graalvm.version>21.1.0</graalvm.version>
   </properties>
 
   <dependencies>
     <dependency>
       <groupId>org.freemarker</groupId>
       <artifactId>freemarker</artifactId>
-      <version>2.3.30</version>
+      <version>2.3.31</version>
     </dependency>
     <dependency>
       <groupId>commons-io</groupId>
       <artifactId>commons-io</artifactId>
-      <version>2.5</version>
+      <version>2.8.0</version>
     </dependency>
     <dependency>
       <groupId>com.google.guava</groupId>
@@ -63,6 +64,12 @@
       <version>4.13.1</version>
       <scope>test</scope>
     </dependency>
+    <dependency>
+      <groupId>org.graalvm.sdk</groupId>
+      <artifactId>graal-sdk</artifactId>
+      <version>${graalvm.version}</version>
+      <scope>provided</scope>
+    </dependency>
   </dependencies>
 
   <build>
@@ -70,7 +77,7 @@
       <plugin>
         <groupId>org.apache.maven.plugins</groupId>
         <artifactId>maven-source-plugin</artifactId>
-        <version>3.0.1</version>
+        <version>3.2.1</version>
         <executions>
           <execution>
             <id>attach-sources</id>
@@ -83,7 +90,7 @@
       <plugin>
         <groupId>org.apache.maven.plugins</groupId>
         <artifactId>maven-javadoc-plugin</artifactId>
-        <version>3.0.0</version>
+        <version>3.2.0</version>
         <configuration>
           <source>8</source>
         </configuration>
@@ -109,6 +116,34 @@
   </repositories>
 
   <profiles>
+    <profile>
+      <id>native-image</id>
+      <build>
+        <plugins>
+          <plugin>
+            <groupId>org.graalvm.nativeimage</groupId>
+            <artifactId>native-image-maven-plugin</artifactId>
+            <version>${graalvm.version}</version>
+            <executions>
+              <execution>
+                <goals>
+                  <goal>native-image</goal>
+                </goals>
+                <phase>package</phase>
+              </execution>
+            </executions>
+            <configuration>
+              <imageName>${project.name}</imageName>
+              <buildArgs>
+                --shared
+                -H:DashboardDump=${project.name} -H:+DashboardAll
+                -H:+DashboardJson -H:+DashboardPretty
+              </buildArgs>
+            </configuration>
+          </plugin>
+        </plugins>
+      </build>
+    </profile>
     <profile>
       <id>sign-artifacts</id>
       <activation>
