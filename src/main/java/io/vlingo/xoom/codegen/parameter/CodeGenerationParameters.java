@@ -40,10 +40,6 @@ public class CodeGenerationParameters {
     this.parameters.addAll(parameters);
   }
 
-  public CodeGenerationParameters add(final ParameterLabel label, final Object value) {
-    return add(label, value.toString());
-  }
-
   public CodeGenerationParameters add(final ParameterLabel label, final String value) {
     return add(CodeGenerationParameter.of(label, value));
   }
@@ -51,6 +47,10 @@ public class CodeGenerationParameters {
   public CodeGenerationParameters add(final CodeGenerationParameter parameter) {
     this.parameters.add(parameter);
     return this;
+  }
+
+  public CodeGenerationParameters add(final ParameterLabel label, final Object object) {
+    return add(CodeGenerationParameter.ofObject(label, object));
   }
 
   public void addAll(final Map<ParameterLabel, String> parameterEntries) {
