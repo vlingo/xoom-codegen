@@ -11,6 +11,7 @@ import io.vlingo.xoom.codegen.parameter.CodeGenerationParameters;
 import io.vlingo.xoom.codegen.template.TemplateParameters;
 
 import java.util.function.Consumer;
+import java.util.stream.Stream;
 
 public enum Dialect {
   C_SHARP("cs", new String[]{}, new String[]{}),
@@ -43,6 +44,11 @@ public enum Dialect {
     this.testSourceFolder = testSourceFolder;
     this.preParametersProcessingResolver = preParametersProcessingResolver;
     this.postParametersProcessingResolver = postParametersProcessingResolver;
+  }
+
+  public static Dialect withName(final String name) {
+    return Stream.of(values()).filter(dialect -> dialect.name().equalsIgnoreCase(name))
+            .findFirst().orElse(null);
   }
 
   public static Dialect findDefault() {
