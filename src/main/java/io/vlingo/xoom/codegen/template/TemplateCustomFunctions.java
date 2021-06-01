@@ -29,9 +29,7 @@ public class TemplateCustomFunctions {
     return false;
   }
 
-  /**
-   * TODO: improve
-   */
+  //TODO: Improve
   public String makePlural(final String word) {
     if (word.endsWith("s") || word.endsWith("sh") || word.endsWith("ch") || word.endsWith("z")) {
       return word + "es";
