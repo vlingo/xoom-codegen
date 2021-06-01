@@ -77,10 +77,6 @@ public class CodeGenerationParameters {
     return mapper.apply(retrieveValue(label));
   }
 
-  public <T> T retrieveObject(final ParameterLabel label) {
-    return retrieveOne(label).object();
-  }
-
   public CodeGenerationParameter retrieveOne(final ParameterLabel label) {
     return parameters.stream()
             .filter(param -> param.isLabeled(label)).findFirst()

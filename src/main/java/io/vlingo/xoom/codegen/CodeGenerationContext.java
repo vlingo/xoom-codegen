@@ -98,10 +98,6 @@ public class CodeGenerationContext {
     return mapper.apply(value);
   }
 
-  public <T> T parameterObjectOf(final ParameterLabel label) {
-    return parameters.retrieveObject(label);
-  }
-
   public List<TemplateData> templateParametersOf(final TemplateStandard standard) {
     return templatesData.stream().filter(templateData -> templateData.hasStandard(standard))
             .collect(Collectors.toList());
