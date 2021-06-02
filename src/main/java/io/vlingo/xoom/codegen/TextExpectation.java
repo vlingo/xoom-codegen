@@ -22,6 +22,10 @@ public class TextExpectation {
     return new TextExpectation(Dialect.JAVA);
   }
 
+  public static TextExpectation onCSharp() {
+    return new TextExpectation(Dialect.C_SHARP);
+  }
+
   private TextExpectation(final Dialect dialect) {
     this.dialect = dialect;
   }
