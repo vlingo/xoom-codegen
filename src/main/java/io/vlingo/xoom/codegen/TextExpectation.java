@@ -26,6 +26,10 @@ public class TextExpectation {
     return new TextExpectation(Dialect.C_SHARP);
   }
 
+  public static TextExpectation onReactJs() {
+     return new TextExpectation(Dialect.REACTJS);
+  }
+
   private TextExpectation(final Dialect dialect) {
     this.dialect = dialect;
   }
