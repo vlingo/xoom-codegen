@@ -2,7 +2,7 @@
   <modelVersion>4.0.0</modelVersion>
   <groupId>io.vlingo.xoom</groupId>
   <artifactId>xoom-codegen</artifactId>
-  <version>1.8.0</version>
+  <version>1.8.1-SNAPSHOT</version>
   <description>Code generation library used by XOOM Designer and XOOM Turbo. (Specialized code generation for XOOM Actors, XOOM HTTP, and others are based on distinct libraries maintained in their own repositories).</description>
   <name>xoom-codegen</name>
   <url>https://github.com/vlingo/xoom-codegen</url>
