@@ -7,10 +7,10 @@
 
 package io.vlingo.xoom.codegen.parameter;
 
-import io.vlingo.xoom.codegen.parameter.CodeGenerationParameters.RetrievalLevel;
-
 import java.util.function.Function;
 import java.util.stream.Stream;
+
+import io.vlingo.xoom.codegen.parameter.CodeGenerationParameters.RetrievalLevel;
 
 public class CodeGenerationParameter {
 
@@ -147,6 +147,7 @@ public class CodeGenerationParameter {
     return new CodeGenerationParameter(label, formatter.apply(value), parent, relatedParameters);
   }
 
+  @SuppressWarnings("unchecked")
   public <T> T object() {
     return (T) object;
   }

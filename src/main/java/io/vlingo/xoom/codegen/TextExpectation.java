@@ -7,12 +7,12 @@
 
 package io.vlingo.xoom.codegen;
 
-import io.vlingo.xoom.codegen.dialect.Dialect;
-import org.apache.commons.io.IOUtils;
-
-import java.io.IOException;
 import java.io.InputStream;
 import java.nio.charset.StandardCharsets;
+
+import org.apache.commons.io.IOUtils;
+
+import io.vlingo.xoom.codegen.dialect.Dialect;
 
 public class TextExpectation {
 
