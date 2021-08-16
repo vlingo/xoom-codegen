@@ -12,9 +12,15 @@ import io.vlingo.xoom.codegen.parameter.CodeGenerationParameters;
 import io.vlingo.xoom.codegen.parameter.ParameterLabel;
 import io.vlingo.xoom.codegen.template.TemplateParameters;
 
+import java.util.stream.Collectors;
+import java.util.stream.Stream;
+
 import static io.vlingo.xoom.codegen.dialect.Dialect.KOTLIN;
 
 public class KotlinSyntaxConverter {
+
+  public static final ReservedWordsHandler handlerForImportStatements =
+          ReservedWordsHandler.using((resolver, word) -> "`" + word + "`");
 
   public static final void convertFieldTypes(final CodeGenerationParameters params,
                                              final ParameterLabel parent,
@@ -27,17 +33,9 @@ public class KotlinSyntaxConverter {
   }
 
   protected static final String handleImportEntry(final String importEntry) {
-    String resolvedImport = importEntry;
-    for (final String reservedWord : DialectSetup.KOTLIN_RESERVED_WORDS) {
-      resolvedImport = handleReservedWord(reservedWord, resolvedImport);
-    }
-    return resolvedImport;
+    return Stream.of(importEntry.split("\\."))
+            .map(importPart -> handlerForImportStatements.handle(KOTLIN, importPart))
+            .collect(Collectors.joining("."));
   }
 
-  private static final String handleReservedWord(final String reservedWord, final String importEntry) {
-    final String resolvedImport =
-            !importEntry.startsWith(reservedWord + ".") ? importEntry :
-                    importEntry.replaceFirst(reservedWord + "\\.", "`" + reservedWord + "`.");
-    return resolvedImport.replaceAll("\\." + reservedWord + "\\.", ".`" + reservedWord + "`.");
-  }
 }
