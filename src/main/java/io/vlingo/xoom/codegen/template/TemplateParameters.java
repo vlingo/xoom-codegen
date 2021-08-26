@@ -63,7 +63,7 @@ public class TemplateParameters {
       return false;
     }
 
-    final String classPackage = CodeElementFormatter.packageOf(qualifiedClassName);
+    final String classPackage = CodeElementFormatter.newInstance().packageOf(qualifiedClassName);
 
     return !find(PACKAGE_NAME).equals(classPackage);
   }

@@ -8,41 +8,56 @@
 package io.vlingo.xoom.codegen.content;
 
 import com.google.common.base.CaseFormat;
+import io.vlingo.xoom.codegen.dialect.ReservedWordsHandler;
 
 import java.beans.Introspector;
 
 public class CodeElementFormatter {
 
-  public static String qualifiedNameOf(final String packageName,
+  private final ReservedWordsHandler reservedWordsHandler;
+
+  public static CodeElementFormatter newInstance() {
+    return new CodeElementFormatter(ReservedWordsHandler.noOp());
+  }
+
+  public static CodeElementFormatter with(final ReservedWordsHandler reservedWordsHandler) {
+    return new CodeElementFormatter(reservedWordsHandler);
+  }
+
+  public CodeElementFormatter(final ReservedWordsHandler reservedWordsHandler) {
+    this.reservedWordsHandler = reservedWordsHandler;
+  }
+
+  public String qualifiedNameOf(final String packageName,
                                        final String className) {
     return packageName + "." + className;
   }
 
-  public static String simpleNameToAttribute(final String simpleName) {
+  public String simpleNameToAttribute(final String simpleName) {
     return Introspector.decapitalize(simpleName);
   }
 
-  public static String qualifiedNameToAttribute(final String qualifiedName) {
+  public String qualifiedNameToAttribute(final String qualifiedName) {
     return simpleNameToAttribute(simpleNameOf(qualifiedName));
   }
 
-  public static String simpleNameOf(final String qualifiedName) {
+  public String simpleNameOf(final String qualifiedName) {
     return qualifiedName.substring(qualifiedName.lastIndexOf(".") + 1);
   }
 
-  public static String packageOf(final String qualifiedName) {
+  public String packageOf(final String qualifiedName) {
     return qualifiedName.substring(0, qualifiedName.lastIndexOf("."));
   }
 
-  public static String importAllFrom(final String packageName) {
+  public String importAllFrom(final String packageName) {
     return packageName + ".*";
   }
 
-  public static String staticallyImportAllFrom(final String projectionSourceTypesQualifiedName) {
+  public String staticallyImportAllFrom(final String projectionSourceTypesQualifiedName) {
     return "static " + importAllFrom(projectionSourceTypesQualifiedName);
   }
 
-  public static String staticConstant(final String constantName) {
+  public String staticConstant(final String constantName) {
     return CaseFormat.LOWER_CAMEL.to(CaseFormat.UPPER_UNDERSCORE, constantName);
   }
 }

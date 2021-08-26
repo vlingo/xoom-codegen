@@ -37,6 +37,10 @@ public class ReservedWordsHandler {
   private final String suffix;
   private final BiFunction<ReservedWordsHandler, String, String> resolutionPolicy;
 
+  public static ReservedWordsHandler noOp() {
+    return using((handler, word) -> word);
+  }
+
   public static ReservedWordsHandler using(final BiFunction<ReservedWordsHandler, String, String> resolutionPolicy) {
     return new ReservedWordsHandler("", resolutionPolicy);
   }
@@ -62,6 +66,5 @@ public class ReservedWordsHandler {
     }
     return word;
   }
-
 
 }

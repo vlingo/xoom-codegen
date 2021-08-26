@@ -33,7 +33,7 @@ public class TypeBasedContent extends Content {
 
   @Override
   public String retrievePackage() {
-    return CodeElementFormatter.packageOf(retrieveQualifiedName());
+    return CodeElementFormatter.newInstance().packageOf(retrieveQualifiedName());
   }
 
   @Override
