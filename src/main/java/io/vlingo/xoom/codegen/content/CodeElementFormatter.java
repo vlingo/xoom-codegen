@@ -12,6 +12,7 @@ import io.vlingo.xoom.codegen.dialect.Dialect;
 import io.vlingo.xoom.codegen.dialect.ReservedWordsHandler;
 
 import java.beans.Introspector;
+import java.util.regex.Pattern;
 import java.util.stream.Collectors;
 import java.util.stream.Stream;
 
@@ -76,7 +77,7 @@ public class CodeElementFormatter {
   }
 
   public String rectifyPackageSyntax(final String packageName) {
-    return Stream.of(packageName.split(dialect.packageSeparator()))
+    return Stream.of(packageName.split(Pattern.quote(dialect.packageSeparator())))
             .map(packageElement -> reservedWordsHandler.handle(dialect, packageElement))
             .collect(Collectors.joining("."));
   }
