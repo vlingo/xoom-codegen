@@ -30,6 +30,7 @@ public class CodeElementFormatterTest {
     Assert.assertEquals("VLINGO_XOOM_APPLICATION", javaFormatter.staticConstant("vlingoXoomApplication"));
     Assert.assertEquals("xoomApp", javaFormatter.rectifySyntax("xoomApp"));
     Assert.assertEquals("io.vlingo.xoom.XoomApp", javaFormatter.rectifySyntax("io.vlingo.xoom.XoomApp"));
+    Assert.assertEquals("io.public_.xoom.transient_.XoomApp", javaFormatter.rectifySyntax("io.public.xoom.transient.XoomApp"));
     Assert.assertEquals("private_", javaFormatter.rectifySyntax("private"));
   }
 
