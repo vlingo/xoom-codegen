@@ -83,4 +83,7 @@ public enum Dialect {
     this.postParametersProcessingResolver.accept(parameters);
   }
 
+  public String packageSeparator() {
+    return "."; //Resolve conditionally if new dialects need it
+  }
 }
