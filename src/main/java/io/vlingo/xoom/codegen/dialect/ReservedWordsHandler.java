@@ -16,13 +16,12 @@ public class ReservedWordsHandler {
   static {
     indexedReservedWords.put(Dialect.JAVA,
             Collections.unmodifiableList(
-                    Arrays.asList("abstract", "assert", "boolean", "break", "byte", "case",
-                    "catch", "char", "class", "const", "continue", "default", "double",
-                    "do", "else", "enum", "extends", "false", "final", "finally", "float",
-                    "for", "goto", "if", "implements", "import", "instanceof", "int", "interface",
-                    "long", "native", "new", "null", "package", "private", "protected", "public",
-                    "return", "short", "static", "strictfp", "super", "switch", "synchronized",
-                    "this", "throw", "throws", "transient", "true", "try", "void", "volatile", "while")
+                    Arrays.asList("abstract", "assert", "break", "case",
+                    "catch", "class", "const", "continue", "default", "do", "else", "enum",
+                    "extends", "false", "final", "finally", "for", "goto", "if", "implements", "import",
+                    "instanceof", "interface", "native", "new", "null", "package", "private", "protected",
+                    "public", "return", "static", "strictfp", "super", "switch", "synchronized", "this",
+                    "throw", "throws", "transient", "true", "try", "void", "volatile", "while")
             ));
 
     indexedReservedWords.put(Dialect.KOTLIN,

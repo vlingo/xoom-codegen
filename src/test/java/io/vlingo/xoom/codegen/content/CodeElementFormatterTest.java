@@ -32,6 +32,13 @@ public class CodeElementFormatterTest {
     Assert.assertEquals("io.vlingo.xoom.XoomApp", javaFormatter.rectifySyntax("io.vlingo.xoom.XoomApp"));
     Assert.assertEquals("io.public_.xoom.transient_.XoomApp", javaFormatter.rectifySyntax("io.public.xoom.transient.XoomApp"));
     Assert.assertEquals("private_", javaFormatter.rectifySyntax("private"));
+    Assert.assertEquals("int", javaFormatter.rectifySyntax("int"));
+    Assert.assertEquals("byte", javaFormatter.rectifySyntax("byte"));
+    Assert.assertEquals("short", javaFormatter.rectifySyntax("short"));
+    Assert.assertEquals("long", javaFormatter.rectifySyntax("long"));
+    Assert.assertEquals("double", javaFormatter.rectifySyntax("double"));
+    Assert.assertEquals("char", javaFormatter.rectifySyntax("char"));
+    Assert.assertEquals("boolean", javaFormatter.rectifySyntax("boolean"));
   }
 
   @Before
