@@ -7,19 +7,7 @@
 
 package io.vlingo.xoom.codegen;
 
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.Collections;
-import java.util.List;
-import java.util.Map;
-import java.util.function.Function;
-import java.util.stream.Collectors;
-import java.util.stream.Stream;
-
-import javax.annotation.processing.Filer;
-import javax.lang.model.element.Element;
-import javax.lang.model.element.TypeElement;
-
+import io.vlingo.xoom.actors.Logger;
 import io.vlingo.xoom.codegen.content.Content;
 import io.vlingo.xoom.codegen.content.ContentLoader;
 import io.vlingo.xoom.codegen.dialect.Dialect;
@@ -31,10 +19,20 @@ import io.vlingo.xoom.codegen.template.OutputFileInstantiator;
 import io.vlingo.xoom.codegen.template.TemplateData;
 import io.vlingo.xoom.codegen.template.TemplateStandard;
 
+import javax.annotation.processing.Filer;
+import javax.lang.model.element.Element;
+import javax.lang.model.element.TypeElement;
+import java.util.*;
+import java.util.function.Function;
+import java.util.stream.Collectors;
+import java.util.stream.Stream;
+
 public class CodeGenerationContext {
 
   private Filer filer;
   private Element source;
+  private Logger logger;
+  public final String generationId;
   private final CodeGenerationParameters parameters;
   private final List<Content> contents = new ArrayList<>();
   private final List<TemplateData> templatesData = new ArrayList<>();
@@ -58,6 +56,8 @@ public class CodeGenerationContext {
   }
 
   private CodeGenerationContext() {
+    this.logger = Logger.basicLogger();
+    this.generationId = UUID.randomUUID().toString();
     this.parameters = CodeGenerationParameters.empty();
   }
 
@@ -117,6 +117,11 @@ public class CodeGenerationContext {
     this.templatesData.add(templateData);
   }
 
+  public CodeGenerationContext logger(final Logger logger) {
+    this.logger = logger;
+    return this;
+  }
+
   //TODO: Make it private
   public CodeGenerationContext addContent(final TemplateStandard standard,
                                           final OutputFile file,
@@ -156,7 +161,6 @@ public class CodeGenerationContext {
     return contents.stream().filter(content -> content.has(standard)).findFirst()
             .orElseThrow(() -> new IllegalArgumentException("Unable to find content " + standard));
   }
-
 
   public Content findContent(final TemplateStandard standard, final String contentName) {
     return contents.stream().filter(content -> content.has(standard) && content.isNamed(contentName)).findFirst()

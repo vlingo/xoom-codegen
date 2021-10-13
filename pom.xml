@@ -44,6 +44,11 @@
 
   <dependencies>
     <dependency>
+      <groupId>io.vlingo.xoom</groupId>
+      <artifactId>xoom-actors</artifactId>
+      <version>${project.version}</version>
+    </dependency>
+    <dependency>
       <groupId>org.freemarker</groupId>
       <artifactId>freemarker</artifactId>
       <version>2.3.31</version>
