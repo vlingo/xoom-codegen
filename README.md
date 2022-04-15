@@ -10,14 +10,14 @@ Code generation library used by XOOM Designer and XOOM Turbo. (Specialized code 
   <dependency>
     <groupId>io.vlingo.xoom</groupId>
     <artifactId>xoom-codegen</artifactId>
-    <version>1.9.2</version>
+    <version>1.9.3</version>
     <type>pom</type>
   </dependency>
 ```
 
 ```gradle
 dependencies {
-    compile 'io.vlingo.xoom:xoom-codegen:1.9.2'
+    compile 'io.vlingo.xoom:xoom-codegen:1.9.3'
 }
 ```
 
