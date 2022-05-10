@@ -11,7 +11,7 @@ import io.vlingo.xoom.codegen.template.TemplateStandard;
 
 public enum FakeTemplateStandards implements TemplateStandard {
 
-  AGGREGATE, AGGREGATE_STATE;
+  AGGREGATE, AGGREGATE_STATE, AGGREGATE_PROTOCOL;
 
   @Override
   public String resolveClassname() {
