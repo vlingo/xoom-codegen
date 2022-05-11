@@ -15,13 +15,13 @@ public interface ModuleRetriever {
   boolean support(final String text);
 
   static String retrieve(final String text) {
-    return Stream.of(new DefaultModuleRetriever(), new CsharpModuleRetriever(), new AgnosticModuleRetriever())
+    return Stream.of(new JvmModuleRetriever(), new DotNetModuleRetriever(), new AgnosticModuleRetriever())
         .filter(retriever -> retriever.support(text))
         .map(retriever -> retriever.find(text)).findFirst()
         .orElseThrow(() -> new IllegalArgumentException("Unable to find package"));
   }
 
-  class DefaultModuleRetriever implements ModuleRetriever {
+  class JvmModuleRetriever implements ModuleRetriever {
     private final String MODULE_KEYWORD = "package";
 
     @Override
@@ -53,7 +53,7 @@ public interface ModuleRetriever {
     }
   }
 
-  class CsharpModuleRetriever implements ModuleRetriever {
+  class DotNetModuleRetriever implements ModuleRetriever {
     private final String MODULE_KEYWORD = "namespace";
     @Override
     public String find(final String text) {
