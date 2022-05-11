@@ -15,10 +15,10 @@ public interface PackageRetriever {
   boolean support(final String text);
 
   static String retrieve(final String text) {
-    return Stream.of(new DefaultPackageRetriever(),
-            new AgnosticPackageRetriever()).filter(retriever -> retriever.support(text))
-            .map(retriever -> retriever.find(text)).findFirst()
-            .orElseThrow(() -> new IllegalArgumentException("Unable to find package"));
+    return Stream.of(new CsharpPackageRetriever(), new DefaultPackageRetriever(), new AgnosticPackageRetriever())
+        .filter(retriever -> retriever.support(text))
+        .map(retriever -> retriever.find(text)).findFirst()
+        .orElseThrow(() -> new IllegalArgumentException("Unable to find package"));
   }
 
   class DefaultPackageRetriever implements PackageRetriever {
@@ -28,12 +28,12 @@ public interface PackageRetriever {
       final int packageStartIndex = text.indexOf("package");
       final int packageEndIndex = text.indexOf("\\n", packageStartIndex + 8);
       return text.substring(packageStartIndex + 8, packageEndIndex)
-              .replaceAll(";", "").trim();
+          .replaceAll(";", "").trim();
     }
 
     @Override
     public boolean support(final String text) {
-      return text.indexOf("\\n") != -1;
+      return text.contains("\\n");
     }
   }
 
@@ -42,13 +42,28 @@ public interface PackageRetriever {
     @Override
     public String find(final String text) {
       return Stream.of(text.split("\\r?\\n")).filter(line -> line.startsWith("package"))
-              .map(line -> line.replaceAll("package", "").replaceAll(";", "").trim())
-              .findFirst().orElse("");
+          .map(line -> line.replaceAll("package", "").replaceAll(";", "").trim())
+          .findFirst().orElse("");
     }
 
     @Override
     public boolean support(final String text) {
       return text.split("\\r?\\n").length > 0;
+    }
+  }
+
+  class CsharpPackageRetriever implements PackageRetriever {
+
+    @Override
+    public String find(final String text) {
+      final int packageStartIndex = text.indexOf("namespace");
+      final int packageEndIndex = text.substring(packageStartIndex).indexOf(";");
+      return text.substring(packageStartIndex + "namespace".length() + 1, packageEndIndex + packageStartIndex);
+    }
+
+    @Override
+    public boolean support(final String text) {
+      return text.contains("namespace");
     }
   }
 }

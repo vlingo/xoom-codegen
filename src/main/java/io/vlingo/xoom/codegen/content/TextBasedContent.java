@@ -94,16 +94,7 @@ public class TextBasedContent extends Content {
 
   @Override
   public String retrievePackage() {
-    if(file.getAbsolutePath().contains(".java"))
-      return retrievePackageBasedOn("package");
-    else
-      return retrievePackageBasedOn("namespace");
-  }
-
-  private String retrievePackageBasedOn(String keyword) {
-    final int packageStartIndex = text.indexOf(keyword);
-    final int packageEndIndex = text.substring(packageStartIndex).indexOf(";");
-    return text.substring(packageStartIndex + keyword.length() + 1, packageEndIndex + packageStartIndex);
+    return PackageRetriever.retrieve(text);
   }
 
   @Override
