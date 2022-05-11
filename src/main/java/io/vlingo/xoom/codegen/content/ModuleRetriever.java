@@ -8,24 +8,25 @@ package io.vlingo.xoom.codegen.content;
 
 import java.util.stream.Stream;
 
-public interface PackageRetriever {
+public interface ModuleRetriever {
 
   String find(final String text);
 
   boolean support(final String text);
 
   static String retrieve(final String text) {
-    return Stream.of(new CsharpPackageRetriever(), new DefaultPackageRetriever(), new AgnosticPackageRetriever())
+    return Stream.of(new DefaultModuleRetriever(), new CsharpModuleRetriever(), new AgnosticModuleRetriever())
         .filter(retriever -> retriever.support(text))
         .map(retriever -> retriever.find(text)).findFirst()
         .orElseThrow(() -> new IllegalArgumentException("Unable to find package"));
   }
 
-  class DefaultPackageRetriever implements PackageRetriever {
+  class DefaultModuleRetriever implements ModuleRetriever {
+    private final String PACKAGE_KEYWORD = "package";
 
     @Override
     public String find(final String text) {
-      final int packageStartIndex = text.indexOf("package");
+      final int packageStartIndex = text.indexOf(PACKAGE_KEYWORD);
       final int packageEndIndex = text.indexOf("\\n", packageStartIndex + 8);
       return text.substring(packageStartIndex + 8, packageEndIndex)
           .replaceAll(";", "").trim();
@@ -33,11 +34,11 @@ public interface PackageRetriever {
 
     @Override
     public boolean support(final String text) {
-      return text.contains("\\n");
+      return text.contains(PACKAGE_KEYWORD);
     }
   }
 
-  class AgnosticPackageRetriever implements PackageRetriever {
+  class AgnosticModuleRetriever implements ModuleRetriever {
 
     @Override
     public String find(final String text) {
@@ -52,18 +53,18 @@ public interface PackageRetriever {
     }
   }
 
-  class CsharpPackageRetriever implements PackageRetriever {
-
+  class CsharpModuleRetriever implements ModuleRetriever {
+    private final String PACKAGE_KEYWORD = "namespace";
     @Override
     public String find(final String text) {
-      final int packageStartIndex = text.indexOf("namespace");
+      final int packageStartIndex = text.indexOf(PACKAGE_KEYWORD);
       final int packageEndIndex = text.substring(packageStartIndex).indexOf(";");
-      return text.substring(packageStartIndex + "namespace".length() + 1, packageEndIndex + packageStartIndex);
+      return text.substring(packageStartIndex + PACKAGE_KEYWORD.length() + 1, packageEndIndex + packageStartIndex);
     }
 
     @Override
     public boolean support(final String text) {
-      return text.contains("namespace");
+      return text.contains(PACKAGE_KEYWORD);
     }
   }
 }

@@ -94,7 +94,7 @@ public class TextBasedContent extends Content {
 
   @Override
   public String retrievePackage() {
-    return PackageRetriever.retrieve(text);
+    return ModuleRetriever.retrieve(text);
   }
 
   @Override
