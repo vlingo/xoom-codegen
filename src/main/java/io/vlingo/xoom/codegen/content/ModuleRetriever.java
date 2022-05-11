@@ -22,11 +22,11 @@ public interface ModuleRetriever {
   }
 
   class DefaultModuleRetriever implements ModuleRetriever {
-    private final String PACKAGE_KEYWORD = "package";
+    private final String MODULE_KEYWORD = "package";
 
     @Override
     public String find(final String text) {
-      final int packageStartIndex = text.indexOf(PACKAGE_KEYWORD);
+      final int packageStartIndex = text.indexOf(MODULE_KEYWORD);
       final int packageEndIndex = text.indexOf("\\n", packageStartIndex + 8);
       return text.substring(packageStartIndex + 8, packageEndIndex)
           .replaceAll(";", "").trim();
@@ -34,7 +34,7 @@ public interface ModuleRetriever {
 
     @Override
     public boolean support(final String text) {
-      return text.contains(PACKAGE_KEYWORD);
+      return text.contains(MODULE_KEYWORD);
     }
   }
 
@@ -54,17 +54,17 @@ public interface ModuleRetriever {
   }
 
   class CsharpModuleRetriever implements ModuleRetriever {
-    private final String PACKAGE_KEYWORD = "namespace";
+    private final String MODULE_KEYWORD = "namespace";
     @Override
     public String find(final String text) {
-      final int packageStartIndex = text.indexOf(PACKAGE_KEYWORD);
+      final int packageStartIndex = text.indexOf(MODULE_KEYWORD);
       final int packageEndIndex = text.substring(packageStartIndex).indexOf(";");
-      return text.substring(packageStartIndex + PACKAGE_KEYWORD.length() + 1, packageEndIndex + packageStartIndex);
+      return text.substring(packageStartIndex + MODULE_KEYWORD.length() + 1, packageEndIndex + packageStartIndex);
     }
 
     @Override
     public boolean support(final String text) {
-      return text.contains(PACKAGE_KEYWORD);
+      return text.contains(MODULE_KEYWORD);
     }
   }
 }
