@@ -27,7 +27,7 @@ public interface ModuleRetriever {
     @Override
     public String find(final String text) {
       final int packageStartIndex = text.indexOf(MODULE_KEYWORD);
-      final int packageEndIndex = text.indexOf("\\n", packageStartIndex + 8);
+      final int packageEndIndex = text.indexOf(";");
       return text.substring(packageStartIndex + 8, packageEndIndex)
           .replaceAll(";", "").trim();
     }
